@@ -1,6 +1,7 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Path
 from fastapi.responses import HTMLResponse
-from typing import List
+from typing import List, Optional # 타입을 지원하는 파이썬의 스탠다드 라이브러리임
+from pydantic import BaseModel
 import numpy as np
 import cv2
 import joblib
@@ -44,5 +45,4 @@ async def predict_skin_oil(file: UploadFile = File(...)):
     img = img.reshape(-1, 100*100)
     global model
     model.predict(img)
-
     return {"result": str(model.predict(img)[0])}
