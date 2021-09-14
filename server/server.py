@@ -14,6 +14,10 @@ app = FastAPI(title="skin oil ML API",
 
 model = None  # 인공지능 변수 전역에 선언
 
+
+class Base64Image(BaseModel):
+    base64 : str
+
 @app.on_event('startup')  # 서버 시작과 함께 인공지능 모델을 불러옴
 async def load_model():
     global model
@@ -52,13 +56,13 @@ async def predict_skin_oil(file: UploadFile = File(...)):
 
 
 @app.post("/predict/skin/oil/base64")
-def skin(base64_string: str):
-    if(base64_string == None):
+def skin(imgStr: Base64Image):
+    if(imgStr.base64 == None):
         return {
             "result": False,
             "Error": "Data input required"
         }
-    img_data = base64.b64decode(base64_string)
+    img_data = base64.b64decode(imgStr.base64)
     image = Image.open(io.BytesIO(img_data))
     img = cv2.cvtColor(np.array(image), cv2.IMREAD_GRAYSCALE)
     img = np.array(cv2.resize(img, dsize=(100, 100),
