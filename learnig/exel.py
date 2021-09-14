@@ -7,15 +7,15 @@ from openpyxl import load_workbook
 
 # data_only=True로 해줘야 수식이 아닌 값으로 받아온다.
 load_wb = load_workbook(
-    "C:/Users/john/Desktop/AIProject/data/skin/1/face.xlsx", data_only=True)
+    "C:/Users/john/Desktop/AIProject/data/skin/1/facehead.xlsx", data_only=True)
 # 시트 이름으로 불러오기
 load_ws = load_wb['Sheet1']
 
 oilArr = np.array([]) # 유분값 리스트
 filenameArr = np.array([]) # 이미지 이름 리스트
 
-get_oil_cells = load_ws['B2': 'B21'] # 셀 범위 불러오기
-get_filename_cells = load_ws['D2': 'D21']
+get_oil_cells = load_ws['B2': 'B26'] # 셀 범위 불러오기
+get_filename_cells = load_ws['D2': 'D26']
 
 # 유분값과 이미지를 각각의 배열에 저장
 for row in get_oil_cells:
@@ -49,6 +49,7 @@ test_img = images[:5]
 kn = KNeighborsClassifier(n_neighbors=1)
 kn.fit(images, oilArr)
 print(kn.predict(test_img))
+joblib.dump(kn, 'C:/Users/john/Desktop/AIProject/ai/skin/test/imageClassification.pkl')
 
 # 투두
 # 엑셀에 명시된 폴더의 모든 이미지를 불러오고 길이 1000의 1차원 배열로 불러온다.
