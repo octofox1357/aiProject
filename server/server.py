@@ -58,7 +58,7 @@ async def predict_skin_oil(files: List[UploadFile] = File(...), alltotal = ''):
                               interpolation=cv2.INTER_AREA))
         img = img.reshape(-1, 256*256)
         global model
-        resArr.append(str(model.predict(img)[0]))
+        resArr.append(model.predict(img)[0])
 
     return {"result": resArr}
 
