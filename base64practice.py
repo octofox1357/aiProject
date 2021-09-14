@@ -29,8 +29,8 @@ def skin(base64_string: str):
     img_data = base64.b64decode(base64_string)
     image = Image.open(io.BytesIO(img_data))
     img = cv2.cvtColor(np.array(image), cv2.IMREAD_GRAYSCALE)
-    img = np.array(cv2.resize(img, dsize=(100, 100),
+    img = np.array(cv2.resize(img, dsize=(256, 256),
                               interpolation=cv2.INTER_AREA))
-    img = img.reshape(-1, 100*100)
+    img = img.reshape(-1, 256*256)
     global model
     return {"result": str(model.predict(img)[0])}

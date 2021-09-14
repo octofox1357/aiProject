@@ -12,10 +12,10 @@ def load_images_from_folder(folder):
     for filename in os.listdir(folder):
         img = cv2.imread(os.path.join(folder, filename), cv2.IMREAD_GRAYSCALE)
         if img is not None:
-            img = np.array(cv2.resize(img, dsize=(100, 100),
+            img = np.array(cv2.resize(img, dsize=(256, 256),
                            interpolation=cv2.INTER_AREA))
             images = np.append(images, img)
-    images = images.reshape(-1, 100*100)
+    images = images.reshape(-1, 256*256)
     return images
 
 

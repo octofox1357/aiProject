@@ -35,20 +35,21 @@ def load_images_from_folder(folder, filenames):
     for filename in filenames:
         img = cv2.imread(os.path.join(folder, filename +'.jpg'), cv2.IMREAD_GRAYSCALE)
         if img is not None:
-            img = np.array(cv2.resize(img, dsize=(100, 100),
+            img = np.array(cv2.resize(img, dsize=(256, 256),
                            interpolation=cv2.INTER_AREA))
             images = np.append(images, img)
-    images = images.reshape(-1, 100*100)
+    images = images.reshape(-1, 256*256)
     return images
 
 
 images = load_images_from_folder('C:/Users/john/Desktop/AIProject/data/skin/1', filenameArr)
-# print(images.shape);
-test_img = images[:5]
+print(images.shape);
+test_img = images[:1]
 
 kn = KNeighborsClassifier(n_neighbors=1)
 kn.fit(images, oilArr)
 print(kn.predict(test_img))
+
 joblib.dump(kn, 'C:/Users/john/Desktop/AIProject/ai/skin/test/imageClassification.pkl')
 
 # 투두
