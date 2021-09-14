@@ -34,7 +34,7 @@ async def main():
     content = """
         <body>
         <form action="/predict/skin/oil" enctype="multipart/form-data" method="post">
-        <input name="file" type="file" multiple>
+        <input name="files" type="file" multiple>
         <input type="submit">
         </form>
         </body>
@@ -43,7 +43,7 @@ async def main():
 
 # https://stackoverflow.com/questions/61333907/receiving-an-image-with-fast-api-processing-it-with-cv2-then-returning-it
 @app.post("/predict/skin/oil")
-async def predict_skin_oil(files: List[UploadFile] = File(...)):
+async def predict_skin_oil(files: List[UploadFile] = File(...), alltotal = ''):
     if(files == None):
         return {
             "result": False,
