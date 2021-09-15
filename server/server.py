@@ -50,7 +50,7 @@ async def main():
 
 # https://stackoverflow.com/questions/61333907/receiving-an-image-with-fast-api-processing-it-with-cv2-then-returning-it
 @app.post("/predict/skin/oil")
-async def predict_skin_oil(files: List[List[UploadFile]] = File(...)):
+async def predict_skin_oil(files: List[UploadFile] = File(...)):
     if(files == None):
         return {
             "result": False,
@@ -71,20 +71,19 @@ async def predict_skin_oil(files: List[List[UploadFile]] = File(...)):
 
 @app.post("/predict/skin/oil/files")
 async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Optional[UploadFile] = File(None), file3: Optional[UploadFile] = File(None)):
-    if(file1 == None):
+    if(file1.filename == ""):
         return {
             "result": False,
             "Error": "Data input required"
         }
 
-    files = []
+    fileArr = []
+    if file1.filename != "": fileArr.append(file1)
+    if file2.filename != "": fileArr.append(file2)
+    if file3.filename != "": fileArr.append(file3)
 
-    if file1 is not None: files.append(file1)
-    if file2 is not None: files.append(file2)
-    if file3 is not None: files.append(file3)
-
-    resArr = [];
-    for file in files:
+    resArr = []
+    for file in fileArr:
         contents = await file.read()
         npArr = np.fromstring(contents, np.uint8)
         img = cv2.imdecode(npArr, cv2.IMREAD_GRAYSCALE)
