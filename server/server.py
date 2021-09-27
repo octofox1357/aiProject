@@ -70,7 +70,9 @@ async def predict_skin_oil(files: List[UploadFile] = File(...)):
 
 
 @app.post("/predict/skin/oil/files")
-async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Optional[UploadFile] = File(None), file3: Optional[UploadFile] = File(None)):
+async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Optional[UploadFile] = File(None), file3: Optional[UploadFile] = File(None), file4: Optional[UploadFile] = File(None),
+    file5: Optional[UploadFile] = File(None),file6: Optional[UploadFile] = File(None), file7: Optional[UploadFile] = File(None),
+    file8: Optional[UploadFile] = File(None), file9: Optional[UploadFile] = File(None),file10: Optional[UploadFile] = File(None)):
     if(file1.filename == ""):
         return {
             "result": False,
@@ -81,6 +83,15 @@ async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Opti
     if file1.filename != "": fileArr.append(file1)
     if file2.filename != "": fileArr.append(file2)
     if file3.filename != "": fileArr.append(file3)
+    if file4.filename != "": fileArr.append(file4)
+    if file5.filename != "": fileArr.append(file5)
+    if file6.filename != "": fileArr.append(file6)
+    if file7.filename != "": fileArr.append(file7)
+    if file8.filename != "": fileArr.append(file8)
+    if file9.filename != "": fileArr.append(file9)
+    if file10.filename != "": fileArr.append(file10)
+
+
 
     resArr = []
     for file in fileArr:
