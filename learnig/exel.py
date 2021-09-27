@@ -7,15 +7,15 @@ from openpyxl import load_workbook
 
 # data_only=True로 해줘야 수식이 아닌 값으로 받아온다.
 load_wb = load_workbook(
-    "C:/Users/john/Desktop/AIProject/data/skin/1/facehead.xlsx", data_only=True)
+    "C:/Users/john/Desktop/AIProject/data/skin/total/facehead.xlsx", data_only=True)
 # 시트 이름으로 불러오기
 load_ws = load_wb['Sheet1']
 
 oilArr = np.array([]) # 유분값 리스트
 filenameArr = np.array([]) # 이미지 이름 리스트
 
-get_oil_cells = load_ws['B2': 'B26'] # 셀 범위 불러오기
-get_filename_cells = load_ws['D2': 'D26']
+get_oil_cells = load_ws['B2': 'B46'] # 셀 범위 불러오기
+get_filename_cells = load_ws['D2': 'D46']
 
 # 유분값과 이미지를 각각의 배열에 저장
 for row in get_oil_cells:
@@ -38,15 +38,17 @@ def load_images_from_folder(folder, filenames):
             img = np.array(cv2.resize(img, dsize=(256, 256),
                            interpolation=cv2.INTER_AREA))
             images = np.append(images, img)
-    images = images.reshape(-1, 256*256)
-    return images
+    return images.reshape(-1, 256*256)
 
 
-images = load_images_from_folder('C:/Users/john/Desktop/AIProject/data/skin/1', filenameArr)
+
+images = load_images_from_folder('C:/Users/john/Desktop/AIProject/data/skin/total', filenameArr)
 print(images.shape);
 test_img = images[:1]
 
 kn = KNeighborsClassifier(n_neighbors=1)
+print(len(images))
+print(len(oilArr))
 kn.fit(images, oilArr)
 print(kn.predict(test_img))
 
