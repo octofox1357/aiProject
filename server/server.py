@@ -82,25 +82,25 @@ async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Opti
         }
 
     fileArr = []
-    if file1.filename != "":
+    if file1 != None:
         fileArr.append(file1)
-    if file2.filename != "":
+    if file2!= None:
         fileArr.append(file2)
-    if file3.filename != "":
+    if file3!= None:
         fileArr.append(file3)
-    if file4.filename != "":
+    if file4!= None:
         fileArr.append(file4)
-    if file5.filename != "":
+    if file5!= None:
         fileArr.append(file5)
-    if file6.filename != "":
+    if file6!= None:
         fileArr.append(file6)
-    if file7.filename != "":
+    if file7!= None:
         fileArr.append(file7)
-    if file8.filename != "":
+    if file8!= None:
         fileArr.append(file8)
-    if file9.filename != "":
+    if file9!= None:
         fileArr.append(file9)
-    if file10.filename != "":
+    if file10!= None:
         fileArr.append(file10)
 
     resArr = []
