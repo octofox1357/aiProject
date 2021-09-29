@@ -51,27 +51,8 @@ async def main():
 
 # https://stackoverflow.com/questions/61333907/receiving-an-image-with-fast-api-processing-it-with-cv2-then-returning-it
 
+
 @app.post("/predict/skin/oil")
-async def predict_skin_oil(files: List[UploadFile] = File(...)):
-    if(files == None):
-        return {
-            "result": False,
-            "Error": "Data input required"
-        }
-    resArr = []
-    for file in files:
-        contents = await file.read()
-        npArr = np.fromstring(contents, np.uint8)
-        img = cv2.imdecode(npArr, cv2.IMREAD_GRAYSCALE)
-        img = np.array(cv2.resize(img, dsize=(256, 256),
-                                  interpolation=cv2.INTER_AREA))
-        img = img.reshape(-1, 256*256)
-        global model
-        resArr.append(model.predict(img)[0])
-    return {"result": resArr}
-
-
-@app.post("/predict/skin/oil/files")
 async def predict_skin_oil(file1: Optional[UploadFile] = File(None), file2: Optional[UploadFile] = File(None), file3: Optional[UploadFile] = File(None), file4: Optional[UploadFile] = File(None),
                            file5: Optional[UploadFile] = File(None), file6: Optional[UploadFile] = File(None), file7: Optional[UploadFile] = File(None),
                            file8: Optional[UploadFile] = File(None), file9: Optional[UploadFile] = File(None), file10: Optional[UploadFile] = File(None)):
